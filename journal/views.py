@@ -34,7 +34,7 @@ class EntryDetail(generic.DetailView):
 class EntryCreate(generic.CreateView):
     model = Entry
     template_name = "entry_create.html"
-    fields = ("title", "slug", "content")
+    fields = ("title", "content")
 
     @method_decorator(login_required(login_url="login"))
     def dispatch(self, *args, **kwargs):
@@ -50,7 +50,7 @@ class EntryCreate(generic.CreateView):
 class EntryEdit(generic.UpdateView):
     model = Entry
     template_name = "entry_edit.html"
-    fields = ("title", "slug", "content")
+    fields = ("title", "content")
 
     @method_decorator(login_required(login_url="login"))
     def dispatch(self, *args, **kwargs):
