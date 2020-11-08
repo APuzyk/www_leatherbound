@@ -18,4 +18,4 @@ class EntrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = m.Entry
-        fields = ["id", "title", "author", "updated_on", "content", "created_on"]
+        fields = ["uuid", "title", "author", "updated_on", "content", "created_on"]

@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+import uuid
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -22,6 +23,7 @@ class Entry(models.Model):
     updated_on = models.DateTimeField(auto_now_add=True)
     content = RichTextField()
     created_on = models.DateTimeField(auto_now_add=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def _str_(self):
         self.title
