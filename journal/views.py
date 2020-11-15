@@ -36,7 +36,8 @@ class EntryList(generics.ListCreateAPIView):
     permission_classes = [IsOwner, IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        entry = serializer.save(author=self.request.user)
+        runEntryModels(entry)
     
     def get_queryset(self):
         user = self.request.user
