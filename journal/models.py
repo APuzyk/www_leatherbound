@@ -16,6 +16,9 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 
 class Entry(models.Model):
+    uuid = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True
+    )
     title = models.CharField(max_length=200)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="journal_entries"
@@ -23,7 +26,6 @@ class Entry(models.Model):
     updated_on = models.DateTimeField(auto_now_add=True)
     content = RichTextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def _str_(self):
         self.title

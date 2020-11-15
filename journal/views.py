@@ -47,31 +47,8 @@ class EntryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Entry.objects.all()
     permission_classes = [IsOwner, IsAuthenticated]
     serializer_class = EntrySerializer
+    lookup_field = 'uuid'
 
-# class EntryList(generic.ListView):
-#     # queryset = Entry.objects.order_by("-created_on")
-#     template_name = "index.html"
-
-#     @method_decorator(login_required(login_url="login"))
-#     def dispatch(self, *args, **kwargs):
-#         return super(EntryList, self).dispatch(*args, **kwargs)
-
-#     def get_queryset(self):
-#         return Entry.objects.filter(author=self.request.user).order_by("-created_on")
-
-
-# class EntryList(APIView):
-#     def get(self, request, format=None):
-#         entries = Entry.objects.all()
-#         serializer = EntrySerializer(entries, many=True)
-#         return Response(serializer.data)
-
-#     def post(self, request, format=None):
-#         serializer = EntrySerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()  # TO do add author
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class ListEntries(APIView):
