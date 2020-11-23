@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,10 +23,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "leatherbound", "static")
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "qx4=t15ihfgi3201j)l-ps&y!t*axyzf6o#7%=-*05b+390plb"
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "qx4=t15ihfgi3201j)l-ps&y!t*axyzf6o#7%=-*05b+390plb")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_PROD') != 'True'
 
 ALLOWED_HOSTS = []
 
@@ -148,3 +149,8 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
 ]
+
+### Databases for prod
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)

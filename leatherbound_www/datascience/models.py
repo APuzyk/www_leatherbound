@@ -1,6 +1,10 @@
 from django.db import models
 from journal.models import Entry
-import requests
+from mr_modeling.predictor.predictor import Predictor
+import pickle
+
+
+predictor = pickle.load(open("/home/apuzyk/Projects/lb_model_api/predictor.p", "rb"))
 
 
 class SentimentScore(models.Model):
@@ -12,12 +16,11 @@ class SentimentScore(models.Model):
 
     @classmethod
     def create(cls, entry: Entry):
-        # ToDo use model to produce sentiment from text
         sentiment_score = cls.get_sentiment_score(entry.content)
         score = cls(entry=entry, sentiment=sentiment_score)
         return score
 
     @staticmethod
-    def get_sentiment_score(content: str, url: str = "http://127.0.0.1:5000/") -> float:
-        response = requests.get(url, {"query": content})
-        return response.json()["sentiment"][0]
+    def get_sentiment_score(content: str) -> float:
+        sentiment_arr = predictor.get_prediction(content)
+        return sentiment_arr[0]

@@ -51,7 +51,7 @@ class EntryList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Entry.objects.filter(author=user)
+        return Entry.objects.filter(author=user).order_by('-created_on')
 
 
 class EntryDetail(generics.RetrieveUpdateDestroyAPIView):
