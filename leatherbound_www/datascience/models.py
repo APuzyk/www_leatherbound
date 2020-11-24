@@ -4,7 +4,7 @@ from mr_modeling.predictor.predictor import Predictor
 import pickle
 
 
-predictor = pickle.load(open("/home/apuzyk/Projects/lb_model_api/predictor.p", "rb"))
+predictor = pickle.load(open("/opt/models/predictor.p", "rb"))
 
 
 class SentimentScore(models.Model):
