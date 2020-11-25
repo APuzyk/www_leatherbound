@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', "qx4=t15ihfgi3201j)l-ps&y!t*axy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_PROD') != 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["leatherbound.app"]
 
 
 # Application definition
@@ -148,6 +148,8 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
+    "http://leatherbound.app",
+    "https://leatherbound.app",
 ]
 
 ### Databases for prod
