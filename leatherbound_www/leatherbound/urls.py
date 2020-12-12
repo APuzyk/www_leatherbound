@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/admin/', admin.site.urls),
     path('api/api-token-auth/', views.obtain_auth_token),
     path('', include('journal.urls')),
+    path('', include('datascience.urls')),
     path('api/api-auth/', include('rest_framework.urls')),
     path('api/users/', include("django.contrib.auth.urls")),
     path('api/users/', include("users.urls")),
