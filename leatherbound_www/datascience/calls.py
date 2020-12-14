@@ -7,5 +7,5 @@ def runEntryModels(entry):
 
 def runSentimentScore(entry):
     print(entry.content)
-    score = SentimentScore.create(entry, entry.author)
+    score = SentimentScore.create(entry)
     score.save()

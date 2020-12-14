@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns = [
-    path("api/datascience/sentiment", views.SentimentScoreList.as_view()),
+    path("api/datascience/sentiment/", views.SentimentScoreList.as_view()),
 ]
