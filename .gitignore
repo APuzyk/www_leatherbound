@@ -1,4 +1,5 @@
 *.sqlite3
+*.onnx
 *.pyc
 *.vscode
 __pycache__/*
@@ -6,3 +7,4 @@ __pycache__/*
 *.p
 *.js
 index.html
+Dockerfile

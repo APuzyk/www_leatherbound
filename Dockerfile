@@ -6,15 +6,18 @@ RUN mkdir -p /opt/app
 RUN mkdir -p /opt/app/pip_cache
 RUN mkdir -p /opt/app/leatherbound
 RUN mkdir -p /opt/models
-COPY predictor.p /opt/models
+
+COPY sentiment_helper.p /opt/models
+COPY sentiment.onnx /opt/models
 COPY requirements.txt start-server.sh /opt/app/
-COPY mr_modeling-0.0.1-py3-none-any.whl /opt/app
+#COPY mr_modeling-0.0.1-py3-none-any.whl /opt/app
 COPY leatherbound_www /opt/app/leatherbound_www/
 
 WORKDIR /opt/app
-RUN pip install torch==1.7.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
-RUN pip install /opt/app/mr_modeling-0.0.1-py3-none-any.whl --no-cache-dir
-RUN rm /opt/app/mr_modeling-0.0.1-py3-none-any.whl
+#RUN pip install torch==1.7.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
+#RUN pip install /opt/app/mr_modeling-0.0.1-py3-none-any.whl --no-cache-dir
+#RUN rm /opt/app/mr_modeling-0.0.1-py3-none-any.whl
+
 RUN pip install -r requirements.txt --no-cache-dir
 RUN chown -R www-data:www-data /opt/app
 

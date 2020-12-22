@@ -1,10 +1,12 @@
 from django.db import models
 from journal.models import Entry
-from mr_modeling.predictor.predictor import Predictor
+import re
+import numpy as np
 import pickle
+import onnxruntime as ort
 
-
-predictor = pickle.load(open("/opt/models/predictor.p", "rb"))
+sentiment_helper = pickle.load(open("/opt/models/sentiment_helper.p", "rb"))
+ort_session = ort.InferenceSession("/opt/models/sentiment.onnx")
 
 
 class SentimentScore(models.Model):
@@ -22,5 +24,28 @@ class SentimentScore(models.Model):
 
     @staticmethod
     def get_sentiment_score(content: str) -> float:
-        sentiment_arr = predictor.get_prediction(content)
-        return sentiment_arr[0]
+        text_vec = get_text_vec(
+            content,
+            sentiment_helper["word_dict"],
+            sentiment_helper["text_input_size"]
+        )
+        sentiment_arr = ort_session.run(None, {"0": text_vec})
+
+        return float(sentiment_arr[0][0][0])
+
+
+def get_text_vec(text, word_dict, text_input_size):
+    text = re.sub(r'<.*?>', '', text) #html tags
+    text = re.sub(r'[^\w\s]', '', text) # punctuation
+    text = text.lower()
+    text = text.strip()    
+
+    indexes = [word_dict.get(word, 0) for word in text]
+
+    if len(indexes) > text_input_size:
+        start = len(indexes) - text_input_size
+        indexes = indexes[start:]
+    else:
+        [indexes.append(0) for _ in range(text_input_size - len(indexes))]
+     
+    return np.array([indexes])

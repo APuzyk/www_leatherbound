@@ -16,3 +16,5 @@ sqlparse==0.4.1
 urllib3==1.25.11
 gunicorn
 dj_database_url
+onnxruntime
+numpy
