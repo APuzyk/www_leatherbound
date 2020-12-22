@@ -25,9 +25,7 @@ class SentimentScore(models.Model):
     @staticmethod
     def get_sentiment_score(content: str) -> float:
         text_vec = get_text_vec(
-            content,
-            sentiment_helper["word_dict"],
-            sentiment_helper["text_input_size"]
+            content, sentiment_helper["word_dict"], sentiment_helper["text_input_size"]
         )
         sentiment_arr = ort_session.run(None, {"0": text_vec})
 
@@ -35,10 +33,10 @@ class SentimentScore(models.Model):
 
 
 def get_text_vec(text, word_dict, text_input_size):
-    text = re.sub(r'<.*?>', '', text) #html tags
-    text = re.sub(r'[^\w\s]', '', text) # punctuation
+    text = re.sub(r"<.*?>", "", text)  # html tags
+    text = re.sub(r"[^\w\s]", "", text)  # punctuation
     text = text.lower()
-    text = text.strip()    
+    text = text.strip()
 
     indexes = [word_dict.get(word, 0) for word in text]
 
@@ -47,5 +45,5 @@ def get_text_vec(text, word_dict, text_input_size):
         indexes = indexes[start:]
     else:
         [indexes.append(0) for _ in range(text_input_size - len(indexes))]
-     
+
     return np.array([indexes])
