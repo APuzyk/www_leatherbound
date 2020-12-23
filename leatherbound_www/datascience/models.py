@@ -29,7 +29,7 @@ class SentimentScore(models.Model):
         )
         sentiment_arr = ort_session.run(None, {"0": text_vec})
 
-        return float(sentiment_arr[0][0][0])
+        return float(sentiment_arr[0][0][1])
 
 
 def get_text_vec(text, word_dict, text_input_size):
