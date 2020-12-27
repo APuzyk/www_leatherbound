@@ -8,3 +8,4 @@ __pycache__/*
 *.js
 index.html
 Dockerfile
+leatherbound_www/leatherbound/static/rest_framework/*
